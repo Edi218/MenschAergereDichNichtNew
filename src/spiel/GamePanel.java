@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 
 public class GamePanel extends JPanel {
@@ -52,6 +53,13 @@ public class GamePanel extends JPanel {
         JButton wuerfelButton = new JButton();
         wuerfelButton.setPreferredSize(new Dimension(263, 263));
         dicePanel.add(wuerfelButton);
+        wuerfelButton.setBackground(Color.BLACK);
+        wuerfelButton.setBorderPainted(false);
+
+//        JButton wuerfelnButton = new JButton("Würfeln");
+//        wuerfelnButton.setPreferredSize(new Dimension(263, 50));
+//        dicePanel.add(wuerfelnButton);
+//        wuerfelnButton.setBackground(Color.WHITE);
 
         ImageIcon diceOne = new ImageIcon(getClass().getResource("images/wuerfel1.png"));
         ImageIcon diceTwo = new ImageIcon(getClass().getResource("images/wuerfel2.png"));
