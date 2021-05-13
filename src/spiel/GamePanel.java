@@ -44,17 +44,22 @@ public class GamePanel extends JPanel {
 
         dicePanel = new JPanel();
         add(dicePanel, BorderLayout.EAST);
+        dicePanel.setVisible(false);
+        dicePanel.setOpaque(false);
         Wuerfel wuerfel = new Wuerfel();
         int augenzahl = wuerfel.wuerfeln();
         System.out.println(augenzahl);
         JButton wuerfelButton = new JButton();
         wuerfelButton.setPreferredSize(new Dimension(263, 263));
+        dicePanel.add(wuerfelButton);
+
         ImageIcon diceOne = new ImageIcon(getClass().getResource("images/wuerfel1.png"));
         ImageIcon diceTwo = new ImageIcon(getClass().getResource("images/wuerfel2.png"));
-        ImageIcon diceThree = new ImageIcon(getClass().getResource("images/schwarz.png"));
-        ImageIcon diceFour = new ImageIcon(getClass().getResource("images/schwarz.png"));
-        ImageIcon diceFive = new ImageIcon(getClass().getResource("images/schwarz.png"));
-        ImageIcon diceSix = new ImageIcon(getClass().getResource("images/schwarz.png"));
+        ImageIcon diceThree = new ImageIcon(getClass().getResource("images/wuerfel3.png"));
+        ImageIcon diceFour = new ImageIcon(getClass().getResource("images/wuerfel4.png"));
+        ImageIcon diceFive = new ImageIcon(getClass().getResource("images/wuerfel5.png"));
+        ImageIcon diceSix = new ImageIcon(getClass().getResource("images/wuerfel6.png"));
+
         if (augenzahl == 1){
             wuerfelButton.setIcon(diceOne);
         }
@@ -159,6 +164,7 @@ public class GamePanel extends JPanel {
         yellow.setVisible(false);
         figurePanel.setVisible(false);
         titlePanel.setVisible(false);
+        dicePanel.setVisible(true);
     }
 
 
