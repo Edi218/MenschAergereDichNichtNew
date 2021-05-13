@@ -7,6 +7,7 @@ import java.awt.event.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 
 
 public class GamePanel extends JPanel {
@@ -45,21 +46,11 @@ public class GamePanel extends JPanel {
 
         dicePanel = new JPanel();
         add(dicePanel, BorderLayout.EAST);
+        dicePanel.setLayout(new BoxLayout(dicePanel, BoxLayout.Y_AXIS));
+        dicePanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
         dicePanel.setVisible(false);
         dicePanel.setOpaque(false);
         Wuerfel wuerfel = new Wuerfel();
-        int augenzahl = wuerfel.wuerfeln();
-        System.out.println(augenzahl);
-        JButton wuerfelButton = new JButton();
-        wuerfelButton.setPreferredSize(new Dimension(263, 263));
-        dicePanel.add(wuerfelButton);
-        wuerfelButton.setBackground(Color.BLACK);
-        wuerfelButton.setBorderPainted(false);
-
-//        JButton wuerfelnButton = new JButton("Würfeln");
-//        wuerfelnButton.setPreferredSize(new Dimension(263, 50));
-//        dicePanel.add(wuerfelnButton);
-//        wuerfelnButton.setBackground(Color.WHITE);
 
         ImageIcon diceOne = new ImageIcon(getClass().getResource("images/wuerfel1.png"));
         ImageIcon diceTwo = new ImageIcon(getClass().getResource("images/wuerfel2.png"));
@@ -68,24 +59,49 @@ public class GamePanel extends JPanel {
         ImageIcon diceFive = new ImageIcon(getClass().getResource("images/wuerfel5.png"));
         ImageIcon diceSix = new ImageIcon(getClass().getResource("images/wuerfel6.png"));
 
-        if (augenzahl == 1){
-            wuerfelButton.setIcon(diceOne);
-        }
-        if (augenzahl == 2){
-            wuerfelButton.setIcon(diceTwo);
-        }
-        if (augenzahl == 3){
-            wuerfelButton.setIcon(diceThree);
-        }
-        if (augenzahl == 4){
-            wuerfelButton.setIcon(diceFour);
-        }
-        if (augenzahl == 5){
-            wuerfelButton.setIcon(diceFive);
-        }
-        if (augenzahl == 6){
-            wuerfelButton.setIcon(diceSix);
-        }
+        JButton wuerfelButton = new JButton();
+        wuerfelButton.setPreferredSize(new Dimension(263, 263));
+        wuerfelButton.setIcon(diceOne);
+        dicePanel.add(wuerfelButton, BorderLayout.NORTH);
+        wuerfelButton.setBackground(Color.BLACK);
+        wuerfelButton.setBorderPainted(false);
+
+
+
+        JButton wuerfelnButton = new JButton("Würfeln");
+        wuerfelnButton.setSize(new Dimension(263, 50));
+        wuerfelnButton.addActionListener(e -> {
+            int augenzahl = wuerfel.wuerfeln();
+
+
+            System.out.println(augenzahl);
+
+
+            if (augenzahl == 1){
+                wuerfelButton.setIcon(diceOne);
+            }
+            if (augenzahl == 2){
+                wuerfelButton.setIcon(diceTwo);
+            }
+            if (augenzahl == 3){
+                wuerfelButton.setIcon(diceThree);
+            }
+            if (augenzahl == 4){
+                wuerfelButton.setIcon(diceFour);
+            }
+            if (augenzahl == 5){
+                wuerfelButton.setIcon(diceFive);
+            }
+            if (augenzahl == 6){
+                wuerfelButton.setIcon(diceSix);
+            }
+
+            wuerfelnButton.setVisible(false);
+        });
+        dicePanel.add(wuerfelnButton, BorderLayout.SOUTH);
+        wuerfelnButton.setBackground(Color.WHITE);
+
+
     }
 
 
@@ -236,8 +252,6 @@ public class GamePanel extends JPanel {
     }
 
     private void doOnTick() {
-        Wuerfel wuerfel = new Wuerfel();
-        wuerfel.wuerfeln();
         repaint();
     }
 
