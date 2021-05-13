@@ -15,8 +15,7 @@ public class DicePanel extends JPanel {
 
     public DicePanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
-        //setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+        setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
 
         ImageIcon diceOne = new ImageIcon(getClass().getResource("images/wuerfel1.png"));
         ImageIcon diceTwo = new ImageIcon(getClass().getResource("images/wuerfel2.png"));
@@ -31,12 +30,13 @@ public class DicePanel extends JPanel {
         diceButton.setIcon(diceOne);
         add(diceButton);
         diceButton.setBackground(Color.BLACK);
+        diceButton.setMargin(new Insets(15, 15, 15, 15));
         diceButton.setBorderPainted(false);
 
         add(Box.createVerticalGlue());
 
         JButton wuerfelnButton = new JButton("Würfeln");
-        wuerfelnButton.setSize(new Dimension(263, 50));
+        wuerfelnButton.setMaximumSize(new Dimension(263, 50));
         wuerfelnButton.setAlignmentX(CENTER_ALIGNMENT);
         wuerfelnButton.addActionListener(e -> {
             Wuerfel wuerfel = new Wuerfel();
@@ -48,19 +48,19 @@ public class DicePanel extends JPanel {
             if (augenzahl == 1){
                 diceButton.setIcon(diceOne);
             }
-            if (augenzahl == 2){
+            else if (augenzahl == 2){
                 diceButton.setIcon(diceTwo);
             }
-            if (augenzahl == 3){
+            else if (augenzahl == 3){
                 diceButton.setIcon(diceThree);
             }
-            if (augenzahl == 4){
+            else if (augenzahl == 4){
                 diceButton.setIcon(diceFour);
             }
-            if (augenzahl == 5){
+            else if (augenzahl == 5){
                 diceButton.setIcon(diceFive);
             }
-            if (augenzahl == 6){
+            else if (augenzahl == 6){
                 diceButton.setIcon(diceSix);
             }
 

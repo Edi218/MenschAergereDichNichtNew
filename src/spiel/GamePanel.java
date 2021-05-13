@@ -198,6 +198,11 @@ public class GamePanel extends JPanel {
         dicePanel.setBackground(Color.BLACK);
         add(dicePanel, BorderLayout.EAST);
         dicePanel.setVisible(true);
+
+        PlayerPanel playerPanel = new PlayerPanel();
+        playerPanel.setBackground(Color.BLACK);
+        add(playerPanel, BorderLayout.WEST);
+        playerPanel.setVisible(true);
     }
 
 
