@@ -13,31 +13,30 @@ import java.net.URL;
 
 public class PlayerPanel extends JPanel {
 
-    ImageIcon player =  new ImageIcon("images/avatar.png");
 
     public PlayerPanel() {
         ImageIcon player =  new ImageIcon("images/avatar.png");
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
-        add(Box.createVerticalGlue());
 
-        JLabel playerOne = new JLabel("Player1", player, JLabel.CENTER);
-        JLabel playerTwo = new JLabel("Player2");
-        JLabel playerThree = new JLabel("Player3");
-        JLabel playerFour = new JLabel("Player4");
+        JButton playerOne = new JButton();
+        playerOne.setMaximumSize(new Dimension(300, 300));
+        playerOne.setAlignmentX(CENTER_ALIGNMENT);
+        playerOne.setIcon(player);
 
-        playerOne.setSize(new Dimension(50, 20));
-        playerTwo.setSize(new Dimension(50, 20));
-        playerThree.setSize(new Dimension(50, 20));
-        playerFour.setSize(new Dimension(50, 20));
+        JButton playerTwo = new JButton("Player2");
+        JButton playerThree = new JButton("Player3");
+        JButton playerFour = new JButton("Player4");
 
-        playerOne.setForeground(Color.WHITE);
+
+
+
 
         add(playerOne);
-        add(playerTwo);
-        add(playerThree);
-        add(playerFour);
+//        add(playerTwo);
+//        add(playerThree);
+//        add(playerFour);
 
 
 
