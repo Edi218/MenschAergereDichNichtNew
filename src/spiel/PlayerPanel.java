@@ -13,13 +13,16 @@ import java.net.URL;
 
 public class PlayerPanel extends JPanel {
 
+    ImageIcon player =  new ImageIcon("images/avatar.png");
 
     public PlayerPanel() {
+        ImageIcon player =  new ImageIcon("images/avatar.png");
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
         add(Box.createVerticalGlue());
 
-        JLabel playerOne = new JLabel("Player1");
+        JLabel playerOne = new JLabel("Player1", player, JLabel.CENTER);
         JLabel playerTwo = new JLabel("Player2");
         JLabel playerThree = new JLabel("Player3");
         JLabel playerFour = new JLabel("Player4");
