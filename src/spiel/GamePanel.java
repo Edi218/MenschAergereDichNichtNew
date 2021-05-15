@@ -41,6 +41,8 @@ public class GamePanel extends JPanel {
         figurePanel = new JPanel();
         add(figurePanel, BorderLayout.CENTER);
 
+
+
         initGame();
         startGame();
 
@@ -200,7 +202,7 @@ public class GamePanel extends JPanel {
         dicePanel.setVisible(true);
 
         PlayerPanel playerPanel = new PlayerPanel();
-        playerPanel.setBackground(Color.BLACK);
+        playerPanel.setBackground(Color.WHITE);
         add(playerPanel, BorderLayout.WEST);
         playerPanel.setVisible(true);
     }

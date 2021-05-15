@@ -3,6 +3,7 @@ package spiel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,28 +16,72 @@ public class PlayerPanel extends JPanel {
 
 
     public PlayerPanel() {
-        ImageIcon player =  new ImageIcon("images/avatar.png");
+        ImageIcon player =  new ImageIcon(getClass().getResource("images/avatar.png"));
+
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
+        setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
 
-        JButton playerOne = new JButton();
-        playerOne.setMaximumSize(new Dimension(300, 300));
-        playerOne.setAlignmentX(CENTER_ALIGNMENT);
-        playerOne.setIcon(player);
+        JButton playerOne = new JButton("grün       ", player);
 
-        JButton playerTwo = new JButton("Player2");
-        JButton playerThree = new JButton("Player3");
-        JButton playerFour = new JButton("Player4");
+        playerOne.setBackground(Color.WHITE);
+
+        playerOne.setMargin(new Insets(0, 0, 10, 0));
+
+        playerOne.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+
+        playerOne.setBorderPainted(false);
+
+        playerOne.setVisible(true);
+
+
+        JButton playerTwo = new JButton("rot           ", player);
+
+        playerTwo.setBackground(Color.WHITE);
+
+        playerTwo.setMargin(new Insets(0, 0, 10, 0));
+
+        playerTwo.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+
+        playerTwo.setBorderPainted(false);
+
+        playerTwo.setVisible(true);
+
+
+        JButton playerThree = new JButton("schwarz", player);
+
+        playerThree.setBackground(Color.WHITE);
+
+        playerThree.setMargin(new Insets(0, 0, 10, 0));
+
+        playerThree.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+
+        playerThree.setBorderPainted(false);
+
+        playerThree.setVisible(true);
+
+
+        JButton playerFour = new JButton("gelb        ", player);
+
+        playerFour.setBackground(Color.WHITE);
+
+        playerFour.setMargin(new Insets(0, 0, 10, 0));
+
+        playerFour.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+
+        playerFour.setBorderPainted(false);
+
+        playerFour.setVisible(true);
+
 
 
 
 
 
         add(playerOne);
-//        add(playerTwo);
-//        add(playerThree);
-//        add(playerFour);
+        add(playerTwo);
+        add(playerThree);
+        add(playerFour);
 
 
 
