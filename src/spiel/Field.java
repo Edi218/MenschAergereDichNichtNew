@@ -3,7 +3,7 @@ package spiel;
 public class Field {
     private double x;
     private double y;
-
+    public int id;
 
     public Field(double x, double y) {
         this.x = x;
