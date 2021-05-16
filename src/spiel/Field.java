@@ -25,4 +25,8 @@ public class Field {
     public void setY(double y) {
         this.y = y;
     }
+
+    public void isOccupiedBy(){
+
+    }
 }
