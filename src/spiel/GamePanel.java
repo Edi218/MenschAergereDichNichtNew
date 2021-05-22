@@ -134,59 +134,22 @@ public class GamePanel extends JPanel {
         JButton red = new JButton(c);
         JButton yellow = new JButton(d);
 
+        ActionListener actionListener = e -> hideButtons(black, green, red, yellow);
 
+        initializeColor(black, actionListener);
+        initializeColor(green, actionListener);
+        initializeColor(red, actionListener);
+        initializeColor(yellow, actionListener);
 
+    }
 
-        black.setPreferredSize(new Dimension(500, 200));
-        black.setBackground(Color.WHITE);
-
-
-
-
-
-        black.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
-        black.setMargin(new Insets(100, 100, 100, 100));
-        black.addActionListener(e -> {
-            hideButtons(black, green, red, yellow);
-
-        });
-        figurePanel.add(black);
-
-
-
-
-        green.setPreferredSize(new Dimension(500, 200));
-        green.setBackground(Color.WHITE);
-        green.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
-        green.setMargin(new Insets(100, 100, 100, 100));
-        green.addActionListener(e -> {
-            hideButtons(black, green, red, yellow);
-        });
-        figurePanel.add(green);
-
-
-
-
-        red.setPreferredSize(new Dimension(500, 200));
-        red.setBackground(Color.WHITE);
-        red.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
-        red.setMargin(new Insets(100, 100, 100, 100));
-        red.addActionListener(e -> {
-            hideButtons(black, green, red, yellow);
-        });
-        figurePanel.add(red);
-
-
-
-        yellow.setPreferredSize(new Dimension(500, 200));
-        yellow.setBackground(Color.WHITE);
-        yellow.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
-        yellow.setMargin(new Insets(100, 100, 100, 100));
-        yellow.addActionListener(e -> {
-            hideButtons(black, green, red, yellow);
-        });
-        figurePanel.add(yellow, BorderLayout.CENTER);
-
+    private void initializeColor(JButton jButton, ActionListener actionListener) {
+        jButton.setPreferredSize(new Dimension(500, 200));
+        jButton.setBackground(Color.WHITE);
+        jButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
+        jButton.setMargin(new Insets(100, 100, 100, 100));
+        jButton.addActionListener(actionListener);
+        figurePanel.add(jButton);
     }
 
     public void hideButtons(JButton black, JButton green, JButton red, JButton yellow) {

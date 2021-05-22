@@ -39,8 +39,8 @@ public class DicePanel extends JPanel {
         wuerfelnButton.setMaximumSize(new Dimension(263, 50));
         wuerfelnButton.setAlignmentX(CENTER_ALIGNMENT);
         wuerfelnButton.addActionListener(e -> {
-            Wuerfel wuerfel = new Wuerfel();
-            int augenzahl = wuerfel.wuerfeln();
+
+            int augenzahl = Wuerfel.wuerfeln();
 
             System.out.println(augenzahl);
 

@@ -7,8 +7,8 @@ public class MenschAergereDichNicht {
 
         new GameWindow();
 
-//        GameBoard gameBoard = new GameBoard();
-//        gameBoard.testen();
+        GameBoard gameBoard = new GameBoard();
+        gameBoard.testen();
 
     }
 }

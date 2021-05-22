@@ -116,12 +116,14 @@ public class GameBoard {
             c = c + 20;
         } // Feld 39-40
 
-//        public void testen(){
-//            for (int i = 0; i < gameBoard.length; i++) {
-//                System.out.println(gameBoard[i].getX());
-//                System.out.println(gameBoard[i].getY());
-//            }
-//        }
 
+        }
+
+
+    public void testen () {
+        for (int i = 0; i < gameBoard.length; i++) {
+            System.out.println(gameBoard[i].getX());
+            System.out.println(gameBoard[i].getY());
+        }
     }
 }
