@@ -15,7 +15,7 @@ public class DicePanel extends JPanel {
 
     public DicePanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+        setBorder(BorderFactory.createLineBorder(java.awt.Color.WHITE, 5));
 
         ImageIcon diceOne = new ImageIcon(getClass().getResource("images/wuerfel1.png"));
         ImageIcon diceTwo = new ImageIcon(getClass().getResource("images/wuerfel2.png"));
@@ -29,7 +29,7 @@ public class DicePanel extends JPanel {
         diceButton.setAlignmentX(CENTER_ALIGNMENT);
         diceButton.setIcon(diceOne);
         add(diceButton);
-        diceButton.setBackground(Color.BLACK);
+        diceButton.setBackground(java.awt.Color.BLACK);
         diceButton.setMargin(new Insets(15, 15, 15, 15));
         diceButton.setBorderPainted(false);
 

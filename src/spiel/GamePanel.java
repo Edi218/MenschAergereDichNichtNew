@@ -34,7 +34,7 @@ public class GamePanel extends JPanel {
         titlePanel = new JPanel();
         JButton titleButton = new JButton("Bitte wählen Sie Ihre Farbe!");
         titleButton.setPreferredSize(new Dimension(200, 50));
-        titleButton.setBackground(Color.WHITE);
+        titleButton.setBackground(java.awt.Color.WHITE);
         titlePanel.add(titleButton);
         add(titlePanel, BorderLayout.NORTH);
 
@@ -145,8 +145,8 @@ public class GamePanel extends JPanel {
 
     private void initializeColor(JButton jButton, ActionListener actionListener) {
         jButton.setPreferredSize(new Dimension(500, 200));
-        jButton.setBackground(Color.WHITE);
-        jButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
+        jButton.setBackground(java.awt.Color.WHITE);
+        jButton.setBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK, 20));
         jButton.setMargin(new Insets(100, 100, 100, 100));
         jButton.addActionListener(actionListener);
         figurePanel.add(jButton);
@@ -160,12 +160,12 @@ public class GamePanel extends JPanel {
         figurePanel.setVisible(false);
         titlePanel.setVisible(false);
         DicePanel dicePanel = new DicePanel();
-        dicePanel.setBackground(Color.BLACK);
+        dicePanel.setBackground(java.awt.Color.BLACK);
         add(dicePanel, BorderLayout.EAST);
         dicePanel.setVisible(true);
 
         PlayerPanel playerPanel = new PlayerPanel();
-        playerPanel.setBackground(Color.WHITE);
+        playerPanel.setBackground(java.awt.Color.WHITE);
         add(playerPanel, BorderLayout.WEST);
         playerPanel.setVisible(true);
     }
@@ -173,8 +173,8 @@ public class GamePanel extends JPanel {
 
     private void initGame () {
         setBackgroundImage(0);
-        titlePanel.setBackground(Color.BLACK);
-        figurePanel.setBackground(Color.BLACK);
+        titlePanel.setBackground(java.awt.Color.BLACK);
+        figurePanel.setBackground(java.awt.Color.BLACK);
         chooseColor();
         createGameObjects();
 

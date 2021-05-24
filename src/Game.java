@@ -1,9 +1,28 @@
 import spiel.Figure;
+import spiel.GameBoard;
+import spiel.Wuerfel;
 
 public class Game {
-    public class Player {
-        public int playersOnTarget;
-        public Figure[] playerFigures = new Figure[4];
-        public int color;
+    public Player[] players = new Player[4];
+    public boolean isOver;
+    public int currentPlayerIndex = 0;
+
+    public Game(){
+
+        GameBoard gameBoard = new GameBoard();
+        for (int i = 0; i < players.length; i++) {
+            players[i].initializeFigures();
+        }
+
+
+        while(!isOver){
+            Player currentPlayer = players[currentPlayerIndex % 4];
+            // if NPC, automatic dice and move
+            // if human, human decide and move
+            Wuerfel.wuerfeln();
+            int steps = ;
+            currentPlayerIndex++;
+        }
     }
+
 }
