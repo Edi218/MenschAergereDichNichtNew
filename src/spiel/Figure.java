@@ -7,15 +7,13 @@ public class Figure {
      * Current position of this figure. Index 1 - 40.
      * 0 = home
      */
-    public int position;
+    public Position position;
 
-
-
-    // TODO what about target fields
 
     public Figure(int id, Color color) {
         this.id = id;
         this.color = color;
+        this.position = new Position(0, null);
     }
 
     public Color getColor() {
@@ -34,20 +32,58 @@ public class Figure {
         this.id = id;
     }
 
-    public int getPosition() {
+
+    public Position getPosition() {
         return position;
     }
 
-    public void setPosition(final int position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
-    public void move(int steps) {
-        if (position == 0) {
-            position += color.startPosition + steps - 1;
+    public Position simulateMove(int steps) {
+        Integer newTargetPosition = null;
+        Integer newStandardPosition = null;
+
+        if (position.getStandardPosition() != null) {
+            boolean lastQuarter = position.getStandardPosition() != null && position.getStandardPosition() >= ((color.startPosition + 40 - 10) % 40) && position.getStandardPosition() <= (color.startPosition == 1 ? 40 : ((color.startPosition + 40 - 1) % 40));
+            int maxStandardPosition = color.startPosition == 1 ? 40 : color.startPosition - 1;
+            int maxTargetPosition = 4;
+            newStandardPosition = position.getStandardPosition() == 0 ? color.startPosition - 1 + steps : position.getStandardPosition() + steps;
+
+            //noch nicht letztes Viertel
+
+            if (!lastQuarter) {
+                return new Position(newStandardPosition % 40, null);
+
+            } else {
+                if (position.getStandardPosition() + steps <= maxStandardPosition) {
+                    return new Position(newStandardPosition % 40, null);
+                } else {
+                    newTargetPosition = newStandardPosition % maxStandardPosition;
+                    if (newTargetPosition > maxTargetPosition) {
+                        return null;
+                    } else {
+                        return new Position(null, newTargetPosition);
+                    }
+                }
+            }
         } else {
-            position = (position + steps) % 40 ;
+            newTargetPosition = position.getTargetPosition() + steps;
+            if (newTargetPosition > 4) {
+                return null;
+            } else {
+                return new Position(null, newTargetPosition);
+            }
         }
-        // target field handling.
+
+    }
+
+    public boolean isOnTarget() {
+        return position.isOnTarget();
+    }
+
+    public void restart() {
+        this.position = new Position(0, null);
     }
 }

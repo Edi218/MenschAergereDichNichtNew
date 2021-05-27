@@ -20,15 +20,15 @@ public class PlayerPanel extends JPanel {
 
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+        setBorder(BorderFactory.createLineBorder(java.awt.Color.WHITE, 5));
 
         JButton playerOne = new JButton("grün       ", player);
 
-        playerOne.setBackground(Color.WHITE);
+        playerOne.setBackground(java.awt.Color.WHITE);
 
         playerOne.setMargin(new Insets(0, 0, 10, 0));
 
-        playerOne.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+        playerOne.setBorder(BorderFactory.createLineBorder(java.awt.Color.BLUE, 5));
 
         playerOne.setBorderPainted(false);
 
@@ -37,11 +37,11 @@ public class PlayerPanel extends JPanel {
 
         JButton playerTwo = new JButton("rot           ", player);
 
-        playerTwo.setBackground(Color.WHITE);
+        playerTwo.setBackground(java.awt.Color.WHITE);
 
         playerTwo.setMargin(new Insets(0, 0, 10, 0));
 
-        playerTwo.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+        playerTwo.setBorder(BorderFactory.createLineBorder(java.awt.Color.BLUE, 5));
 
         playerTwo.setBorderPainted(false);
 
@@ -50,11 +50,11 @@ public class PlayerPanel extends JPanel {
 
         JButton playerThree = new JButton("schwarz", player);
 
-        playerThree.setBackground(Color.WHITE);
+        playerThree.setBackground(java.awt.Color.WHITE);
 
         playerThree.setMargin(new Insets(0, 0, 10, 0));
 
-        playerThree.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+        playerThree.setBorder(BorderFactory.createLineBorder(java.awt.Color.BLUE, 5));
 
         playerThree.setBorderPainted(false);
 
@@ -63,11 +63,11 @@ public class PlayerPanel extends JPanel {
 
         JButton playerFour = new JButton("gelb        ", player);
 
-        playerFour.setBackground(Color.WHITE);
+        playerFour.setBackground(java.awt.Color.WHITE);
 
         playerFour.setMargin(new Insets(0, 0, 10, 0));
 
-        playerFour.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+        playerFour.setBorder(BorderFactory.createLineBorder(java.awt.Color.BLUE, 5));
 
         playerFour.setBorderPainted(false);
 

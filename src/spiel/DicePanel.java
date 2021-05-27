@@ -67,6 +67,6 @@ public class DicePanel extends JPanel {
             wuerfelnButton.setVisible(false);
         });
         add(wuerfelnButton);
-        wuerfelnButton.setBackground(Color.WHITE);
+        wuerfelnButton.setBackground(java.awt.Color.WHITE);
     }
 }
