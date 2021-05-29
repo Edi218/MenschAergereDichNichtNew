@@ -1,4 +1,4 @@
-package spiel;
+package Model;
 
 import java.util.Objects;
 

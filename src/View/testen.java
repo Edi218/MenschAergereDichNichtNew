@@ -1,6 +1,4 @@
-package spiel;
-
-import com.sun.tools.javac.Main;
+package View;
 
 import java.util.Random;
 

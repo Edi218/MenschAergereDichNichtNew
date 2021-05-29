@@ -1,4 +1,4 @@
-package spiel;
+package Model;
 
 import javax.swing.*;
 import java.awt.Color;
@@ -14,11 +14,11 @@ public class Player {
     JButton figureThree = new JButton("Figur ziehen");
     JButton figureFour = new JButton("Figur ziehen");
     private int playersOnTarget;
-    private spiel.Color color;
+    private View.Color color;
     private boolean humanPlayer;
 
 
-    public Player(spiel.Color color) {
+    public Player(View.Color color) {
         this.color = color;
         for (int i = 0; i < figures.length; i++) {
             figures[i] = new Figure(i, color);
@@ -41,11 +41,11 @@ public class Player {
         this.figures = figures;
     }
 
-    public spiel.Color getColor() {
+    public View.Color getColor() {
         return color;
     }
 
-    public void setColor(spiel.Color color) {
+    public void setColor(View.Color color) {
         this.color = color;
     }
 
@@ -95,20 +95,47 @@ public class Player {
     }
 
 
-    // Human
 
 
-    // NPC
 
-
-    public void move(int steps, Player[] otherColorFigures) {
+    public void move(int steps, Player[] players) {
         List<Figure> shortlist = new ArrayList<>();
         List<Position> positionList = new ArrayList<>();
         checkClashWithSameColor(steps, shortlist, positionList);
 
-        int bestMoveIndex = 0;
+        int bestMoveIndex = -1;
         Figure hitFigure = null;
-        bestMoveIndex = calculateBestMove(otherColorFigures, shortlist, positionList, bestMoveIndex);
+
+        for (int i = 0; i < shortlist.size() && bestMoveIndex == -1; i++) {
+            Figure figure = shortlist.get(i);
+            Position position = positionList.get(i);
+            boolean enemyClash = false;
+            if (position.isOnTarget()) {
+                // Good move because safe
+                bestMoveIndex = i;
+            } else {
+                for (Player otherPlayer : players) {
+                    if (otherPlayer == this) {
+                        continue;
+                    }
+                    for (int j = 0; j < otherPlayer.getFigures().length; j++) {
+                        if (position.equals(otherPlayer.getFigures()[j].getPosition())) {
+                            // good move because hitting other figure
+                            hitFigure = otherPlayer.getFigures()[j];
+                            bestMoveIndex = i;
+                            break;
+                        }
+                    }
+                    if (bestMoveIndex != -1) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (bestMoveIndex == -1) {
+            bestMoveIndex = 0;
+        }
 
         if (!shortlist.isEmpty()) {
             shortlist.get(bestMoveIndex).setPosition(positionList.get(bestMoveIndex));
@@ -120,39 +147,6 @@ public class Player {
         } else {
             System.out.println("Player " + color + " can't move any figure.");
         }
-    }
-
-    private int calculateBestMove(Player[] players, List<Figure> shortlist, List<Position> positionList, int bestMoveIndex) {
-        for (int i = 0; i < shortlist.size(); i++) {
-            Figure figure = shortlist.get(i);
-            Position position = positionList.get(i);
-            boolean enemyClash = false;
-
-            if (position.isOnTarget()) {
-                // super zug
-                bestMoveIndex = i;
-                break;
-            } else {
-                for (Player otherPlayer : players) {
-                    if (otherPlayer == this) {
-                        continue;
-                    }
-                    for (int j = 0; j < otherPlayer.getFigures().length; j++) {
-
-                            if (position.equals(figures[j].getPosition())) {
-                                enemyClash = true;
-                                break;
-                            }
-
-                    }
-
-
-                    bestMoveIndex = i;
-                    break;
-                }
-            }
-        }
-        return bestMoveIndex;
     }
 
     private void checkClashWithSameColor(int steps, List<Figure> shortlist, List<Position> positionList) {

@@ -1,4 +1,6 @@
-package spiel;
+package View;
+
+import Model.Game;
 
 import java.io.IOException;
 import java.net.URL;

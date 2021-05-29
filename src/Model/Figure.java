@@ -1,4 +1,6 @@
-package spiel;
+package Model;
+
+import View.Color;
 
 public class Figure {
     public int id;

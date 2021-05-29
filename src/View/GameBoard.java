@@ -1,7 +1,4 @@
-package spiel;
-
-import java.lang.annotation.Target;
-import java.util.*;
+package View;
 
 public class GameBoard {
     public Field[] gameBoard = new Field[41];

@@ -1,4 +1,4 @@
-package spiel;
+package View;
 
 public class Field {
     private int x;

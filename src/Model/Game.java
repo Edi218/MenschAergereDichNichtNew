@@ -1,4 +1,6 @@
-package spiel;
+package Model;
+
+import View.Color;
 
 public class Game {
     public Player[] players = new Player[4];

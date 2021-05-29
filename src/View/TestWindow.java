@@ -1,24 +1,17 @@
-package spiel;
+package View;
 
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class GameWindow extends javax.swing.JFrame {
+public class TestWindow extends javax.swing.JFrame {
 
-    private final GamePanel gamePanel;
-
-    public GameWindow() {
-
-        this.gamePanel = new GamePanel();
-
-        createMenu();
-
-        add(gamePanel);
+    public TestWindow() {
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout());
+        contentPane.add(new DicePanel(), BorderLayout.EAST);
         pack();
 
         setTitle("Mensch Ärgere Dich Nicht");
@@ -52,7 +45,7 @@ public class GameWindow extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 dispose();
-                GameWindow gameWindow = new GameWindow();
+                TestWindow gameWindow = new TestWindow();
             }
         });
 
@@ -69,7 +62,7 @@ public class GameWindow extends javax.swing.JFrame {
 
     public static void main (String[] args){
 
-        new GameWindow();
+        new TestWindow();
 
     }
 
