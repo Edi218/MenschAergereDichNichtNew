@@ -1,10 +1,22 @@
 package View;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+
 public class GameBoard {
     public Field[] gameBoard = new Field[41];
+    public TargetField[] blackTarget = new TargetField[4];
+    public TargetField[] greenTarget = new TargetField[4];
+    public TargetField[] redTarget = new TargetField[4];
+    public TargetField[] yellowTarget = new TargetField[4];
+
+
+
 
     public GameBoard() {
 
+        System.out.println("BAnane");
 
         int c = 0;
 
@@ -114,10 +126,7 @@ public class GameBoard {
             c = c + 20;
         } // Feld 39-40
 
-        TargetField[] blackTarget = new TargetField[4];
-        TargetField[] greenTarget = new TargetField[4];
-        TargetField[] redTarget = new TargetField[4];
-        TargetField[] yellowTarget = new TargetField[4];
+
 
         c = 0;
         //Zielfeld schwarz
@@ -146,16 +155,59 @@ public class GameBoard {
         }
     }
 
-    public void drawGameBoard(){
+    public static void drawCircle(Graphics g, int x, int y, int radius) {
+
+        int diameter = radius * 2;
+
+        g.fillOval(x - radius, y - radius, diameter, diameter);
+
+    }
+
+    public void render(){
+        BufferStrategy bs = GamePanel.getGameViewPanel().getBufferStrategy();
+        while (bs == null) {
+            GamePanel.getGameViewPanel().createBufferStrategy(3);
+            bs = GamePanel.getGameViewPanel().getBufferStrategy();
+        }
+
+        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+
+        g.clearRect(0, 0, GamePanel.getGameViewPanel().getWidth(), GamePanel.getGameViewPanel().getHeight());
+
+        drawGameBoard(g); // in der methode steht alles was gemalt werden soll
+
+        g.dispose();
+        bs.show();
+    }
+
+    public void drawGameBoard(Graphics2D g){
+            g.setColor(java.awt.Color.WHITE);
+            g.fillRect(0, 0, 200, 200);
+
+//        for (int i = 1; i < gameBoard.length; i++) {
+//            drawCircle(g, gameBoard[i].getX(), gameBoard[i].getY(), 5);
+//        }
+//        for (int i = 0; i < blackTarget.length; i++) {
+//            drawCircle(g, blackTarget[i].getX(), blackTarget[i].getY(), 5);
+//        }
+//        for (int i = 0; i < greenTarget.length; i++) {
+//            drawCircle(g, greenTarget[i].getX(), greenTarget[i].getY(), 5);
+//        }
+//        for (int i = 0; i < redTarget.length; i++) {
+//            drawCircle(g, redTarget[i].getX(), redTarget[i].getY(), 5);
+//        }
+//        for (int i = 0; i < yellowTarget.length; i++) {
+//            drawCircle(g, yellowTarget[i].getX(), yellowTarget[i].getY(), 5);
+//        }
+
+    }
+
+    public void testen () {
         for (int i = 0; i < gameBoard.length; i++) {
 
         }
     }
 
-    public void testen () {
-        for (int i = 0; i < gameBoard.length; i++) {
-            System.out.println(gameBoard[i].getX());
-            System.out.println(gameBoard[i].getY());
-        }
+    public void drawGameBoard() {
     }
 }

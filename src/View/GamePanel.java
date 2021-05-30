@@ -2,12 +2,14 @@ package View;
 
 import Model.Game;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.awt.*;
 import java.awt.event.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 
 public class GamePanel extends JPanel {
@@ -19,14 +21,19 @@ public class GamePanel extends JPanel {
 
     private JPanel titlePanel;
     private JPanel figurePanel;
-    public JPanel dicePanel;
+    private JPanel gamePanel;
     private Image backgroundImage;
     private boolean gameOver = false;
-    private int figureOnTarget = 0;
     private Timer timer;
     public int playerColor;
+    private static GameViewPanel gameViewPanel;
+
+    public static GameViewPanel getGameViewPanel() {
+        return gameViewPanel;
+    }
 
     public GamePanel() {
+
         setFocusable(true);
         setPreferredSize(prefSize);
         setLayout(new BorderLayout());
@@ -131,6 +138,14 @@ public class GamePanel extends JPanel {
         playerPanel.setBackground(java.awt.Color.WHITE);
         add(playerPanel, BorderLayout.WEST);
         playerPanel.setVisible(true);
+
+        GameBoard gameBoard = new GameBoard();
+        GameViewPanel gameViewPanel = new GameViewPanel();
+        add(gameViewPanel, BorderLayout.CENTER);
+        gameViewPanel.setVisible(true);
+        gameBoard.render();
+
+
     }
 
 
@@ -139,7 +154,7 @@ public class GamePanel extends JPanel {
         titlePanel.setBackground(java.awt.Color.BLACK);
         figurePanel.setBackground(java.awt.Color.BLACK);
         chooseColor();
-        createGameObjects();
+
 
         timer = new Timer(20, new ActionListener() {
             @Override
@@ -149,13 +164,6 @@ public class GamePanel extends JPanel {
         });
     }
 
-    private void createGameObjects() {
-
-    }
-
-    private void initPlayersFigures() {
-
-    }
 
     public void setBackgroundImage(int imageNumber) {
         String imagePath = IMAGE_DIR + backgroundImages[imageNumber];
@@ -167,31 +175,7 @@ public class GamePanel extends JPanel {
         }
     }
 
-    private void startGame() {
-        timer.start();
-    }
 
-    public void pauseGame() {
-        timer.stop();
-    }
-    public
- void continueGame() {
-        if (!isGameOver()) {
-            timer.start();
-        }
-    }
-
-    public void restartGame() {
-        figureOnTarget = 0;
-        setGameOver(false);
-        createGameObjects();
-        startGame();
-    }
-
-    private void endGame() {
-        setGameOver(true);
-        pauseGame();
-    }
 
     private void doOnTick() {
         repaint();
