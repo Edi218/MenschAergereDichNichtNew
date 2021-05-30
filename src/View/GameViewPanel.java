@@ -7,12 +7,13 @@ import java.util.Random;
 
 public class GameViewPanel extends Canvas {
 
-
+public Canvas getCanvas(){
+    return (Canvas) this;
+}
 
     public GameViewPanel(){
-        GameBoard gameBoard = new GameBoard();
-        setBackground(java.awt.Color.RED);
-        setBounds(new Rectangle(500, 500));
-        gameBoard.render();
+        super();
+        setBounds(0, 0, 800, 800);
+        setBackground(Color.BLUE);
     }
 }

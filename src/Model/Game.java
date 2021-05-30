@@ -1,11 +1,13 @@
 package Model;
 
 import View.Color;
+import View.GameWindow;
 
 public class Game {
     public Player[] players = new Player[4];
     public boolean isOver;
     public int currentPlayerIndex = -1;
+    public GameWindow gameWindow;
 
     public Game(int playerColor) {
 
@@ -22,6 +24,7 @@ public class Game {
     }
 
     private void start() {
+        gameWindow = new GameWindow();
         while (currentPlayerIndex == -1 || !isOver()) {
             currentPlayerIndex = (currentPlayerIndex + 1) % 4;
             Player currentPlayer = players[currentPlayerIndex];

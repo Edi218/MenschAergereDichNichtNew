@@ -3,6 +3,7 @@ package View;
 import Model.Game;
 
 import java.awt.Color;
+import java.awt.image.BufferStrategy;
 import java.io.IOException;
 import java.net.URL;
 import java.awt.*;
@@ -26,9 +27,13 @@ public class GamePanel extends JPanel {
     private boolean gameOver = false;
     private Timer timer;
     public int playerColor;
-    private static GameViewPanel gameViewPanel;
+    private GameViewPanel gameViewPanel;
+    private DicePanel dicePanel;
+    private PlayerPanel playerPanel;
+    private GameBoard gameBoard;
 
-    public static GameViewPanel getGameViewPanel() {
+
+    public GameViewPanel getGameViewPanel() {
         return gameViewPanel;
     }
 
@@ -129,80 +134,83 @@ public class GamePanel extends JPanel {
         yellow.setVisible(false);
         figurePanel.setVisible(false);
         titlePanel.setVisible(false);
-        DicePanel dicePanel = new DicePanel();
+
+        initGame();
+    }
+
+    private void initGame(){
+        dicePanel = new DicePanel();
         dicePanel.setBackground(java.awt.Color.BLACK);
         add(dicePanel, BorderLayout.EAST);
         dicePanel.setVisible(true);
 
-        PlayerPanel playerPanel = new PlayerPanel();
+        playerPanel = new PlayerPanel();
         playerPanel.setBackground(java.awt.Color.WHITE);
         add(playerPanel, BorderLayout.WEST);
         playerPanel.setVisible(true);
 
-        GameBoard gameBoard = new GameBoard();
-        GameViewPanel gameViewPanel = new GameViewPanel();
+        gameViewPanel = new GameViewPanel();
         add(gameViewPanel, BorderLayout.CENTER);
         gameViewPanel.setVisible(true);
-        gameBoard.render();
 
-
-    }
-
-
-    private void initGame () {
-        setBackgroundImage(0);
-        titlePanel.setBackground(java.awt.Color.BLACK);
-        figurePanel.setBackground(java.awt.Color.BLACK);
-        chooseColor();
-
-
-        timer = new Timer(20, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doOnTick();
+        gameBoard = new GameBoard();
+        while (true) {
+            render();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
-    }
-
-
-    public void setBackgroundImage(int imageNumber) {
-        String imagePath = IMAGE_DIR + backgroundImages[imageNumber];
-        URL imageURL = getClass().getResource(imagePath);
-        try {
-            backgroundImage = ImageIO.read(imageURL);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
-
-
-    private void doOnTick() {
-        repaint();
-    }
-
-    @Override
-    public void paintComponent (Graphics g) {
-        super.paintComponent(g);
-
-        if (backgroundImage != null) {
-            g.drawImage(backgroundImage, 0, 0, this);
+    public void render(){
+        BufferStrategy bs = gameViewPanel.getBufferStrategy();
+        while (bs == null) {
+            gameViewPanel.createBufferStrategy(3);
+            bs = gameViewPanel.getBufferStrategy();
         }
 
-//        Graphics2D g2d = (Graphics2D) g;
-//        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+
+        g.clearRect(0, 0, 500, 500);
+
+
+        gameBoard.drawGameBoard(g); // in der methode steht alles was gemalt werden soll
+
+        g.dispose();
+        bs.show();
+
+
+    }
+
+
+
+
+
+
+//    @Override
+//    public void paintComponent (Graphics g) {
+//        super.paintComponent(g);
 //
-//        backgroundImage.paintIcon(null, g, 0, 0);
-//
-//        g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 19));
-//        g.setColor(Color.BLUE);
-//        g.drawString("Gewonnen " + figureOnTarget, 22, prefSize.height-5);
-//
-//        if (isGameOver()) {
-//            g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 50));
-//            g.setColor(Color.RED);
-//            g.drawString("GAME OVER!", prefSize.width/2 - 130, prefSize.height/5);
+//        if (backgroundImage != null) {
+//            g.drawImage(backgroundImage, 0, 0, this);
 //        }
-    }
+//
+////        Graphics2D g2d = (Graphics2D) g;
+////        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+////
+////        backgroundImage.paintIcon(null, g, 0, 0);
+////
+////        g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 19));
+////        g.setColor(Color.BLUE);
+////        g.drawString("Gewonnen " + figureOnTarget, 22, prefSize.height-5);
+////
+////        if (isGameOver()) {
+////            g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 50));
+////            g.setColor(Color.RED);
+////            g.drawString("GAME OVER!", prefSize.width/2 - 130, prefSize.height/5);
+////        }
+//    }
 
 }

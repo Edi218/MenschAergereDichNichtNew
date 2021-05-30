@@ -16,21 +16,23 @@ public class GameBoard {
 
     public GameBoard() {
 
+        gameBoard[0] = new Field(0, 0);
+
         System.out.println("BAnane");
 
         int c = 0;
 
         for (int i = 1; i < 6; i++) {
-
+            System.out.println(i);
             gameBoard[i] = new Field(310 + c, 230);
-
+            System.out.println(i);
             c = c + 20;
         } // Feld 1-5
 
         c = 0;
 
         for (int i = 6; i < 10; i++) {
-
+            System.out.println(i);
             gameBoard[i] = new Field(390, 210 - c);
 
             c = c + 20;
@@ -39,7 +41,7 @@ public class GameBoard {
         c = 0;
 
         for (int i = 10; i < 12; i++) {
-
+            System.out.println(i);
             gameBoard[i] = new Field(410 + c, 150);
 
             c = c + 20;
@@ -111,7 +113,7 @@ public class GameBoard {
         c = 0;
 
         for (int i = 36; i < 38; i++) {
-
+            System.out.println(i);
             gameBoard[i] = new Field(370 - c, 270);
 
             c = c + 20;
@@ -122,11 +124,11 @@ public class GameBoard {
         for (int i = 38; i < 40; i++) {
 
             gameBoard[i] = new Field(310, 270 - c);
-
+            System.out.println(i);
             c = c + 20;
         } // Feld 39-40
 
-
+        gameBoard[40] = new Field(0,0);
 
         c = 0;
         //Zielfeld schwarz
@@ -155,7 +157,7 @@ public class GameBoard {
         }
     }
 
-    public static void drawCircle(Graphics g, int x, int y, int radius) {
+    public static void drawCircle(Graphics2D g, int x, int y, int radius) {
 
         int diameter = radius * 2;
 
@@ -163,42 +165,26 @@ public class GameBoard {
 
     }
 
-    public void render(){
-        BufferStrategy bs = GamePanel.getGameViewPanel().getBufferStrategy();
-        while (bs == null) {
-            GamePanel.getGameViewPanel().createBufferStrategy(3);
-            bs = GamePanel.getGameViewPanel().getBufferStrategy();
-        }
 
-        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-
-        g.clearRect(0, 0, GamePanel.getGameViewPanel().getWidth(), GamePanel.getGameViewPanel().getHeight());
-
-        drawGameBoard(g); // in der methode steht alles was gemalt werden soll
-
-        g.dispose();
-        bs.show();
-    }
 
     public void drawGameBoard(Graphics2D g){
-            g.setColor(java.awt.Color.WHITE);
-            g.fillRect(0, 0, 200, 200);
+        g.setColor(java.awt.Color.BLACK);
 
-//        for (int i = 1; i < gameBoard.length; i++) {
-//            drawCircle(g, gameBoard[i].getX(), gameBoard[i].getY(), 5);
-//        }
-//        for (int i = 0; i < blackTarget.length; i++) {
-//            drawCircle(g, blackTarget[i].getX(), blackTarget[i].getY(), 5);
-//        }
-//        for (int i = 0; i < greenTarget.length; i++) {
-//            drawCircle(g, greenTarget[i].getX(), greenTarget[i].getY(), 5);
-//        }
-//        for (int i = 0; i < redTarget.length; i++) {
-//            drawCircle(g, redTarget[i].getX(), redTarget[i].getY(), 5);
-//        }
-//        for (int i = 0; i < yellowTarget.length; i++) {
-//            drawCircle(g, yellowTarget[i].getX(), yellowTarget[i].getY(), 5);
-//        }
+        for (int i = 1; i < gameBoard.length; i++) {
+            drawCircle(g, gameBoard[i].getX(), gameBoard[i].getY(), 5);
+        }
+        for (int i = 0; i < blackTarget.length; i++) {
+            drawCircle(g, blackTarget[i].getX(), blackTarget[i].getY(), 5);
+        }
+        for (int i = 0; i < greenTarget.length; i++) {
+            drawCircle(g, greenTarget[i].getX(), greenTarget[i].getY(), 5);
+        }
+        for (int i = 0; i < redTarget.length; i++) {
+            drawCircle(g, redTarget[i].getX(), redTarget[i].getY(), 5);
+        }
+        for (int i = 0; i < yellowTarget.length; i++) {
+            drawCircle(g, yellowTarget[i].getX(), yellowTarget[i].getY(), 5);
+        }
 
     }
 
