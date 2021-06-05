@@ -1,4 +1,4 @@
-package View;
+package view;
 
 public class Field {
     private int x;

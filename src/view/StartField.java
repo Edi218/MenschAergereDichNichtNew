@@ -1,12 +1,14 @@
-package View;
+package view;
 
-public class TargetField {
+public class StartField {
     private int x;
     private int y;
     public int id;
     public Color color;
 
-    public TargetField(int x, int y, Color color) {
+
+
+    public StartField(int x, int y, Color color) {
         this.x = x;
         this.y = y;
         this.color = color;
@@ -28,8 +30,6 @@ public class TargetField {
         this.color = color;
     }
 
-
-
     public int getX() {
         return x;
     }
@@ -45,6 +45,5 @@ public class TargetField {
     public void setY(int y) {
         this.y = y;
     }
-
 
 }

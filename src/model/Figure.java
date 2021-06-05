@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import View.Color;
+import view.Color;
 
 public class Figure {
     public int id;
@@ -15,7 +15,7 @@ public class Figure {
     public Figure(int id, Color color) {
         this.id = id;
         this.color = color;
-        this.position = new Position(0, null);
+        this.position = new Position();
     }
 
     public Color getColor() {
@@ -48,10 +48,10 @@ public class Figure {
         Integer newStandardPosition = null;
 
         if (position.getStandardPosition() != null) {
-            boolean lastQuarter = position.getStandardPosition() != null && position.getStandardPosition() >= ((color.startPosition + 40 - 10) % 40) && position.getStandardPosition() <= (color.startPosition == 1 ? 40 : ((color.startPosition + 40 - 1) % 40));
-            int maxStandardPosition = color.startPosition == 1 ? 40 : color.startPosition - 1;
+            boolean lastQuarter = position.getStandardPosition() != null && position.getStandardPosition() >= ((color.getStartPosition() + 40 - 10) % 40) && position.getStandardPosition() <= (color.getStartPosition() == 1 ? 40 : ((color.getStartPosition() + 40 - 1) % 40));
+            int maxStandardPosition = color.getStartPosition() == 1 ? 40 : color.getStartPosition() - 1;
             int maxTargetPosition = 4;
-            newStandardPosition = position.getStandardPosition() == 0 ? color.startPosition - 1 + steps : position.getStandardPosition() + steps;
+            newStandardPosition = position.getStandardPosition() == 0 ? color.getStartPosition() - 1 + steps : position.getStandardPosition() + steps;
 
             //noch nicht letztes Viertel
 

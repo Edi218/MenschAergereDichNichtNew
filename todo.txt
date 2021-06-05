@@ -1,0 +1,7 @@
+-- draw index in circle - done
+-- highlight current player in player panel - done
+-- Show dialog of winner after game over
+-- Add footer line to display messages such as figure hit
+-- Change board background
+-- Replace human photo with figure photo - done
+-- Human player handling with figure selection with error handling (e.g. clash with same color)

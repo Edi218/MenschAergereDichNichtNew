@@ -1,16 +1,12 @@
-package View;
+package view;
 
-import Model.Game;
+import model.Game;
 
-import java.awt.Color;
-import java.awt.image.BufferStrategy;
-import java.io.IOException;
-import java.net.URL;
-import java.awt.*;
-import java.awt.event.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
+import java.awt.Color;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+import java.util.concurrent.TimeUnit;
 
 
 public class GamePanel extends JPanel {
@@ -18,32 +14,31 @@ public class GamePanel extends JPanel {
     public static final String IMAGE_DIR = "images/";
 
     private final Dimension prefSize = new Dimension(1180, 780);
-    private final String[] backgroundImages= new String [] {"blackscreen.png", "schwarz.png"};
-
+    private final String[] backgroundImages = new String[]{"blackscreen.png", "schwarz.png"};
+    private final Game game;
+    public int playerColor;
     private JPanel titlePanel;
     private JPanel figurePanel;
     private JPanel gamePanel;
     private Image backgroundImage;
     private boolean gameOver = false;
     private Timer timer;
-    public int playerColor;
     private GameViewPanel gameViewPanel;
     private DicePanel dicePanel;
     private PlayerPanel playerPanel;
     private GameBoard gameBoard;
+    private ReportPanel reportPanel;
+    private String newText;
 
 
-    public GameViewPanel getGameViewPanel() {
-        return gameViewPanel;
-    }
-
-    public GamePanel() {
-
+    public GamePanel(Game game) {
+        this.game = game;
         setFocusable(true);
         setPreferredSize(prefSize);
         setLayout(new BorderLayout());
 
         titlePanel = new JPanel();
+        titlePanel.setBackground(java.awt.Color.BLACK);
         JButton titleButton = new JButton("Bitte wählen Sie Ihre Farbe!");
         titleButton.setPreferredSize(new Dimension(200, 50));
         titleButton.setBackground(java.awt.Color.WHITE);
@@ -51,19 +46,18 @@ public class GamePanel extends JPanel {
         add(titlePanel, BorderLayout.NORTH);
 
         figurePanel = new JPanel();
+        figurePanel.setBackground(java.awt.Color.BLACK);
         add(figurePanel, BorderLayout.CENTER);
-
-
-
         chooseColor();
-        Game game = new Game(playerColor);
     }
 
-    public int getPlayerColor(){
+    public GameViewPanel getGameViewPanel() {
+        return gameViewPanel;
+    }
+
+    public int getPlayerColor() {
         return playerColor;
     }
-
-
 
 
     public boolean isGameOver() {
@@ -75,10 +69,7 @@ public class GamePanel extends JPanel {
     }
 
 
-
-    public void chooseColor(){
-
-
+    public void chooseColor() {
         ImageIcon a = new ImageIcon(getClass().getResource("images/schwarz.png"));
         ImageIcon b = new ImageIcon(getClass().getResource("images/gruen.png"));
         ImageIcon c = new ImageIcon(getClass().getResource("images/rot.png"));
@@ -88,7 +79,6 @@ public class GamePanel extends JPanel {
         JButton green = new JButton(b);
         JButton red = new JButton(c);
         JButton yellow = new JButton(d);
-
 
         initializeColor(black);
         initializeColor(green);
@@ -113,11 +103,6 @@ public class GamePanel extends JPanel {
         });
     }
 
-
-
-
-
-
     private void initializeColor(JButton jButton) {
         jButton.setPreferredSize(new Dimension(500, 200));
         jButton.setBackground(java.awt.Color.WHITE);
@@ -138,7 +123,7 @@ public class GamePanel extends JPanel {
         initGame();
     }
 
-    private void initGame(){
+    private void initGame() {
         dicePanel = new DicePanel();
         dicePanel.setBackground(java.awt.Color.BLACK);
         add(dicePanel, BorderLayout.EAST);
@@ -153,64 +138,89 @@ public class GamePanel extends JPanel {
         add(gameViewPanel, BorderLayout.CENTER);
         gameViewPanel.setVisible(true);
 
-        gameBoard = new GameBoard();
-        while (true) {
+        reportPanel = new ReportPanel(newText);
+        add(reportPanel, BorderLayout.SOUTH);
+        reportPanel.setVisible(true);
+
+        gameBoard = new GameBoard(game);
+        initLoop();
+    }
+
+    private void initLoop() {
+        showCurrentPlayer();
+        render();
+
+        final Runnable moveTask = () -> {
+            showCurrentPlayer();
+            newText = game.oneMove();
+            showCurrentReport(newText);
             render();
             try {
-                Thread.sleep(10);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if (!game.isOver()) {
+                initLoop();
+            } else {
+                System.out.println("Game over");
+            }
+        };
+        final Runnable gameOverTask = () -> {
+                JDialog meinJDialog = new JDialog();
+                // Titel wird gesetzt
+                meinJDialog.setTitle("Mein JDialog Beispiel");
+                // Breite und Höhe des Fensters werden
+                // auf 200 Pixel gesetzt
+                meinJDialog.setSize(200,200);
+                // Dialog wird auf modal gesetzt
+                meinJDialog.setModal(true);
+                // Wir lassen unseren Dialog anzeigen
+                meinJDialog.setVisible(true);
+        };
+        if (game.isOver()) {
+            SwingUtilities.invokeLater(gameOverTask);
+        } else {
+            SwingUtilities.invokeLater(moveTask);
         }
     }
 
-    public void render(){
+    private void showCurrentPlayer() {
+
+        for (int i = 0; i < playerPanel.playerIcons.length; i++) {
+            if (i == game.currentPlayerIndex){
+                playerPanel.playerIcons[i].setBackground(Color.YELLOW);
+            } else{
+                playerPanel.playerIcons[i].setBackground(Color.WHITE);
+            }
+        }
+
+        playerPanel.revalidate();
+    }
+
+    private void showCurrentReport(String s) {
+
+        reportPanel.reportButton.setText(s);
+
+        reportPanel.revalidate();
+
+    }
+
+    public void render() {
         BufferStrategy bs = gameViewPanel.getBufferStrategy();
         while (bs == null) {
             gameViewPanel.createBufferStrategy(3);
             bs = gameViewPanel.getBufferStrategy();
         }
-
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-
-        g.clearRect(0, 0, 500, 500);
-
-
+        g.clearRect(0, 0, gameViewPanel.getWidth(), gameViewPanel.getHeight());
         gameBoard.drawGameBoard(g); // in der methode steht alles was gemalt werden soll
-
         g.dispose();
         bs.show();
-
-
     }
 
-
-
-
-
-
-//    @Override
-//    public void paintComponent (Graphics g) {
-//        super.paintComponent(g);
-//
-//        if (backgroundImage != null) {
-//            g.drawImage(backgroundImage, 0, 0, this);
-//        }
-//
-////        Graphics2D g2d = (Graphics2D) g;
-////        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-////
-////        backgroundImage.paintIcon(null, g, 0, 0);
-////
-////        g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 19));
-////        g.setColor(Color.BLUE);
-////        g.drawString("Gewonnen " + figureOnTarget, 22, prefSize.height-5);
-////
-////        if (isGameOver()) {
-////            g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 50));
-////            g.setColor(Color.RED);
-////            g.drawString("GAME OVER!", prefSize.width/2 - 130, prefSize.height/5);
-////        }
+//    public void update(Graphics g) {
+//        g.clearRect(0, 0, gameViewPanel.getWidth(), gameViewPanel.getHeight());
+//        gameBoard.drawGameBoard((Graphics2D) g); // in der methode steht alles was gemalt werden soll
 //    }
-
 }

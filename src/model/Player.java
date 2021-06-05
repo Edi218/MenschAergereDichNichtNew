@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import javax.swing.*;
 import java.awt.Color;
@@ -14,11 +14,12 @@ public class Player {
     JButton figureThree = new JButton("Figur ziehen");
     JButton figureFour = new JButton("Figur ziehen");
     private int playersOnTarget;
-    private View.Color color;
+    private view.Color color;
     private boolean humanPlayer;
+    public String newText;
 
 
-    public Player(View.Color color) {
+    public Player(view.Color color) {
         this.color = color;
         for (int i = 0; i < figures.length; i++) {
             figures[i] = new Figure(i, color);
@@ -41,11 +42,11 @@ public class Player {
         this.figures = figures;
     }
 
-    public View.Color getColor() {
+    public view.Color getColor() {
         return color;
     }
 
-    public void setColor(View.Color color) {
+    public void setColor(view.Color color) {
         this.color = color;
     }
 
@@ -98,7 +99,7 @@ public class Player {
 
 
 
-    public void move(int steps, Player[] players) {
+    public String move(int steps, Player[] players) {
         List<Figure> shortlist = new ArrayList<>();
         List<Position> positionList = new ArrayList<>();
         checkClashWithSameColor(steps, shortlist, positionList);
@@ -144,9 +145,13 @@ public class Player {
                 System.out.println("Figure " + hitFigure.getColor() + " hit and moved to start");
             }
             System.out.println("Player " + color + " moves " + steps + " steps");
+            newText = "Player " + color + " moves " + steps + " steps";
         } else {
             System.out.println("Player " + color + " can't move any figure.");
         }
+
+
+        return newText;
     }
 
     private void checkClashWithSameColor(int steps, List<Figure> shortlist, List<Position> positionList) {

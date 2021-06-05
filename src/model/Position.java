@@ -1,10 +1,20 @@
-package Model;
+package model;
 
 import java.util.Objects;
 
 public class Position {
     private Integer standardPosition;
     private Integer targetPosition;
+
+    public Position() {
+        this.standardPosition = 0;
+        this.targetPosition = null;
+    }
+
+    public Position(Integer standardPosition, Integer targetPosition) {
+        this.standardPosition = standardPosition;
+        this.targetPosition = targetPosition;
+    }
 
     @Override
     public String toString() {
@@ -43,12 +53,16 @@ public class Position {
         this.targetPosition = targetPosition;
     }
 
-    public Position(Integer standardPosition, Integer targetPosition) {
-        this.standardPosition = standardPosition;
-        this.targetPosition = targetPosition;
-    }
-
     public boolean isOnTarget() {
         return targetPosition != null;
     }
+
+    public boolean isOnStart() {
+        return standardPosition != null && standardPosition == 0;
+    }
+
+    public boolean isOnStandard() {
+        return standardPosition != null && standardPosition != 0;
+    }
+
 }
