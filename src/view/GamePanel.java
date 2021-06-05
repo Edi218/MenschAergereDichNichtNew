@@ -136,16 +136,16 @@ public class GamePanel extends JPanel {
     private void initLoop() {
         showCurrentPlayer();
         final Runnable moveTask = () -> {
-            render();
-            newText = game.oneMove();
-            showCurrentPlayer();
-            showCurrentReport(newText);
             try {
                 render();
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            newText = game.oneMove();
+            render();
+            showCurrentPlayer();
+            showCurrentReport(newText);
             if (!game.isOver()) {
                 initLoop();
             } else {
