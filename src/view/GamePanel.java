@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.util.concurrent.TimeUnit;
 
 
 public class GamePanel extends JPanel {
@@ -21,8 +20,6 @@ public class GamePanel extends JPanel {
     private JPanel figurePanel;
     private JPanel gamePanel;
     private Image backgroundImage;
-    private boolean gameOver = false;
-    private Timer timer;
     private GameViewPanel gameViewPanel;
     private DicePanel dicePanel;
     private PlayerPanel playerPanel;
@@ -58,16 +55,6 @@ public class GamePanel extends JPanel {
     public int getPlayerColor() {
         return playerColor;
     }
-
-
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
-    }
-
 
     public void chooseColor() {
         ImageIcon a = new ImageIcon(getClass().getResource("images/schwarz.png"));
@@ -148,14 +135,13 @@ public class GamePanel extends JPanel {
 
     private void initLoop() {
         showCurrentPlayer();
-        render();
-
         final Runnable moveTask = () -> {
-            showCurrentPlayer();
-            newText = game.oneMove();
-            showCurrentReport(newText);
             render();
+            newText = game.oneMove();
+            showCurrentPlayer();
+            showCurrentReport(newText);
             try {
+                render();
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -165,6 +151,7 @@ public class GamePanel extends JPanel {
             } else {
                 System.out.println("Game over");
             }
+
         };
         final Runnable gameOverTask = () -> {
                 JDialog meinJDialog = new JDialog();
@@ -218,7 +205,6 @@ public class GamePanel extends JPanel {
         g.dispose();
         bs.show();
     }
-
 //    public void update(Graphics g) {
 //        g.clearRect(0, 0, gameViewPanel.getWidth(), gameViewPanel.getHeight());
 //        gameBoard.drawGameBoard((Graphics2D) g); // in der methode steht alles was gemalt werden soll
