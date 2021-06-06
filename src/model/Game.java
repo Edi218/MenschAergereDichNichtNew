@@ -37,16 +37,26 @@ public class Game {
     public String oneMove(int playerColor, DicePanel dicePanel) {
         currentPlayerIndex = (currentPlayerIndex + 1) % 4;
         currentPlayer = players[currentPlayerIndex];
-        int steps = Wuerfel.wuerfeln();
-        currentPlayer.report();
-        newText = currentPlayer.move(steps, players);
-        currentPlayer.report();
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        if (currentPlayer.isDone()) {
-            System.out.println(currentPlayer.getColor().getText() + "is the Winner");
-            newText = currentPlayer.getColor().getText() + "is the Winner";
+        if (currentPlayerIndex == playerColor){
+            dicePanel.wuerfelnButton.setVisible(true);
+
+
+            if (currentPlayer.isDone()) {
+                System.out.println(currentPlayer.getColor().getText() + "is the Winner");
+                newText = currentPlayer.getColor().getText() + "is the Winner";
+            }
+        } else{
+            int steps = Wuerfel.wuerfeln();
+            currentPlayer.report();
+            newText = currentPlayer.move(steps, players);
+            currentPlayer.report();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            if (currentPlayer.isDone()) {
+                System.out.println(currentPlayer.getColor().getText() + "is the Winner");
+                newText = currentPlayer.getColor().getText() + "is the Winner";
+            }
         }
         return newText;
     }

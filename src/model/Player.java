@@ -154,6 +154,8 @@ public class Player {
         return newText;
     }
 
+
+
     private void checkClashWithSameColor(int steps, List<Figure> shortlist, List<Position> positionList) {
         for (int i = 0; i < figures.length; i++) {
             Position position = figures[i].simulateMove(steps);
