@@ -8,10 +8,16 @@ import java.awt.*;
 
 public class DicePanel extends JPanel {
 
+    public JButton figureOneButton;
+    public JButton figureTwoButton;
+    public JButton figureThreeButton;
+    public JButton figureFourButton;
+    public JButton[] figureMoveButton;
 
     public DicePanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         //setBorder(BorderFactory.createLineBorder(java.awt.Color.WHITE, 5));
+        figureMoveButton = new JButton[4];
 
         ImageIcon diceOne = new ImageIcon(getClass().getResource("images/wuerfel1.png"));
         ImageIcon diceTwo = new ImageIcon(getClass().getResource("images/wuerfel2.png"));
@@ -31,9 +37,10 @@ public class DicePanel extends JPanel {
 
         add(Box.createVerticalGlue());
 
-        JButton wuerfelnButton = new JButton("Würfeln");
+        JButton wuerfelnButton = new JButton("Roll dice");
         wuerfelnButton.setMaximumSize(new Dimension(263, 50));
         wuerfelnButton.setAlignmentX(CENTER_ALIGNMENT);
+        wuerfelnButton.setBackground(java.awt.Color.WHITE);
         wuerfelnButton.addActionListener(e -> {
 
             int augenzahl = Wuerfel.wuerfeln();
@@ -62,7 +69,20 @@ public class DicePanel extends JPanel {
 
             wuerfelnButton.setVisible(false);
         });
+
+
+        for (int i = 0; i < figureMoveButton.length; i++) {
+            int j = i + 1;
+            figureMoveButton[i] = new JButton("move Figure " + j);
+            figureMoveButton[i].setMaximumSize(new Dimension(263, 50));
+            figureMoveButton[i].setVisible(true);
+            figureMoveButton[i].setAlignmentX(CENTER_ALIGNMENT);
+            add(figureMoveButton[i]);
+        }
+
+
+
+
         add(wuerfelnButton);
-        wuerfelnButton.setBackground(java.awt.Color.WHITE);
     }
 }

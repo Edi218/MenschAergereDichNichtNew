@@ -56,7 +56,7 @@ public class GamePanel extends JPanel {
         return playerColor;
     }
 
-    public void chooseColor() {
+    public int chooseColor() {
         ImageIcon a = new ImageIcon(getClass().getResource("images/schwarz.png"));
         ImageIcon b = new ImageIcon(getClass().getResource("images/gruen.png"));
         ImageIcon c = new ImageIcon(getClass().getResource("images/rot.png"));
@@ -88,6 +88,7 @@ public class GamePanel extends JPanel {
             hideButtons(black, green, red, yellow);
             playerColor = 3;
         });
+        return playerColor;
     }
 
     private void initializeColor(JButton jButton) {
@@ -136,14 +137,15 @@ public class GamePanel extends JPanel {
     private void initLoop() {
         showCurrentPlayer();
         final Runnable moveTask = () -> {
+            render();
             try {
                 render();
-                Thread.sleep(3000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            newText = game.oneMove();
-            render();
+
+            newText = game.oneMove(playerColor, dicePanel);
             showCurrentPlayer();
             showCurrentReport(newText);
             if (!game.isOver()) {
@@ -156,7 +158,7 @@ public class GamePanel extends JPanel {
         final Runnable gameOverTask = () -> {
                 JDialog meinJDialog = new JDialog();
                 // Titel wird gesetzt
-                meinJDialog.setTitle("Mein JDialog Beispiel");
+                meinJDialog.setTitle("is the Winner");
                 // Breite und Höhe des Fensters werden
                 // auf 200 Pixel gesetzt
                 meinJDialog.setSize(200,200);
@@ -175,7 +177,7 @@ public class GamePanel extends JPanel {
     private void showCurrentPlayer() {
 
         for (int i = 0; i < playerPanel.playerIcons.length; i++) {
-            if (i == game.currentPlayerIndex){
+            if (i == game.getCurrentPlayerIndex()){
                 playerPanel.playerIcons[i].setBackground(Color.YELLOW);
             } else{
                 playerPanel.playerIcons[i].setBackground(Color.WHITE);

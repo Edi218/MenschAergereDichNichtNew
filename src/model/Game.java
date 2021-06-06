@@ -1,6 +1,7 @@
 package model;
 
 import view.Color;
+import view.DicePanel;
 import view.GameWindow;
 
 public class Game {
@@ -31,21 +32,9 @@ public class Game {
         this.currentPlayerIndex = currentPlayerIndex;
     }
 
-    private void start() {
-        while (currentPlayerIndex == -1 || !isOver()) {
-            currentPlayerIndex = (currentPlayerIndex + 1) % 4;
-            oneMove();
-        }
 
-        System.out.println("Game over. Winner is " + players[currentPlayerIndex].getColor());
-        players[currentPlayerIndex].report();
-    }
 
-    public static void main(String[] args) {
-        new Game(1).start();
-    }
-
-    public String oneMove() {
+    public String oneMove(int playerColor, DicePanel dicePanel) {
         currentPlayerIndex = (currentPlayerIndex + 1) % 4;
         currentPlayer = players[currentPlayerIndex];
         int steps = Wuerfel.wuerfeln();
@@ -57,7 +46,10 @@ public class Game {
         System.out.println();
         if (currentPlayer.isDone()) {
             System.out.println(currentPlayer.getColor().getText() + "is the Winner");
+            newText = currentPlayer.getColor().getText() + "is the Winner";
         }
         return newText;
     }
+
+
 }

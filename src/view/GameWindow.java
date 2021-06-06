@@ -43,9 +43,10 @@ public class GameWindow extends javax.swing.JFrame {
         restart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
+                Game game1 = new Game(1);
                 dispose();
-                GameWindow gameWindow = new GameWindow(game);
+                GameWindow gameWindow = new GameWindow(game1);
+                gameWindow.setVisible(true);
             }
         });
 
@@ -54,6 +55,7 @@ public class GameWindow extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 dispose();
+                System.exit(0);
             }
         });
     }

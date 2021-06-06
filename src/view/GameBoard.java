@@ -279,7 +279,7 @@ public class GameBoard {
             Arrays.stream(colorStartFields).forEach(startField -> {
                 Figure figure = startFigureMap.get(startField);
                 if (figure == null){
-                    g.setColor(java.awt.Color.WHITE);
+                    g.setColor(color.getAwtColor());
                     drawCircle(g, startField.getX(), startField.getY(), 15);
                 } else {
                     g.setColor(color.getAwtColor());
