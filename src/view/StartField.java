@@ -1,5 +1,7 @@
 package view;
 
+import model.Color;
+
 public class StartField {
     private int x;
     private int y;

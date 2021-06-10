@@ -1,52 +1,31 @@
 package model;
 
-import javax.swing.*;
-import java.awt.Color;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Player {
     public Figure[] figures = new Figure[4];
-    int chosenFigure = 0;
-    JButton figureOne = new JButton("Figur ziehen");
-    JButton figureTwo = new JButton("Figur ziehen");
-    JButton figureThree = new JButton("Figur ziehen");
-    JButton figureFour = new JButton("Figur ziehen");
-    private int playersOnTarget;
-    private view.Color color;
+    private Color color;
     private boolean humanPlayer;
-    public String newText;
 
-
-    public Player(view.Color color) {
+    public Player(Color color) {
         this.color = color;
         for (int i = 0; i < figures.length; i++) {
             figures[i] = new Figure(i, color);
         }
-    }
-
-    public int getPlayersOnTarget() {
-        return playersOnTarget;
-    }
-
-    public void setPlayersOnTarget(int playersOnTarget) {
-        this.playersOnTarget = playersOnTarget;
+        humanPlayer = false;
     }
 
     public Figure[] getFigures() {
         return figures;
     }
 
-    public void setFigures(Figure[] figures) {
-        this.figures = figures;
-    }
-
-    public view.Color getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(view.Color color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 
@@ -57,47 +36,6 @@ public class Player {
     public void setHumanPlayer(boolean humanPlayer) {
         this.humanPlayer = humanPlayer;
     }
-
-    private void initializeButton(JButton jButton, JPanel jPanel, Figure figure) {
-        figure.getPosition();
-        jButton.setPreferredSize(new Dimension(100, 40));
-        jButton.setBackground(java.awt.Color.WHITE);
-        jButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
-        actionListener();
-        jPanel.add(jButton);
-    }
-
-    public void hideButtons(JButton figureOne, JButton figureTwo, JButton figureThree, JButton figureFour) {
-        figureOne.setVisible(false);
-        figureTwo.setVisible(false);
-        figureThree.setVisible(false);
-        figureFour.setVisible(false);
-    }
-
-
-    public void actionListener() {
-
-        figureOne.addActionListener(e -> {
-            hideButtons(figureOne, figureTwo, figureThree, figureFour);
-            chosenFigure = 1;
-        });
-        figureTwo.addActionListener(e -> {
-            hideButtons(figureOne, figureTwo, figureThree, figureFour);
-            chosenFigure = 2;
-        });
-        figureThree.addActionListener(e -> {
-            hideButtons(figureOne, figureTwo, figureThree, figureFour);
-            chosenFigure = 3;
-        });
-        figureFour.addActionListener(e -> {
-            hideButtons(figureOne, figureTwo, figureThree, figureFour);
-            chosenFigure = 4;
-        });
-    }
-
-
-
-
 
     public String move(int steps, Player[] players) {
         List<Figure> shortlist = new ArrayList<>();
@@ -145,16 +83,46 @@ public class Player {
                 System.out.println("Figure " + hitFigure.getColor() + " hit and moved to start");
             }
             System.out.println("Player " + color + " moves " + steps + " steps");
-            newText = "Player " + color + " moves " + steps + " steps";
+            return  "Player " + color + " moves " + steps + " steps";
         } else {
             System.out.println("Player " + color + " can't move any figure.");
+            return "Player " + color + " can't move any figure.";
         }
-
-
-        return newText;
     }
 
+    public List<Integer> calculateShortlist(int steps) {
+        List<Figure> shortlist = new ArrayList<>();
+        List<Position> positionList = new ArrayList<>();
+        checkClashWithSameColor(steps, shortlist, positionList);
+        return shortlist.stream().map(figure -> figure.getId()).collect(Collectors.toList());
+    }
 
+    public String humanMove(int steps, int figureId, Player[] players) {
+        Figure hitFigure = null;
+        Position newPosition = figures[figureId].simulateMove(steps);
+        for (Player otherPlayer : players) {
+            if (otherPlayer == this) {
+                continue;
+            }
+            for (int j = 0; j < otherPlayer.getFigures().length; j++) {
+                if (newPosition.equals(otherPlayer.getFigures()[j].getPosition())) {
+                    // good move because hitting other figure
+                    hitFigure = otherPlayer.getFigures()[j];
+                    break;
+                }
+            }
+            if (hitFigure != null) {
+                break;
+            }
+        }
+        figures[figureId].setPosition(newPosition);
+        if (hitFigure != null) {
+            hitFigure.restart();
+            System.out.println("Figure " + hitFigure.getColor() + " hit and moved to start");
+        }
+        System.out.println("Player " + color + " moves " + steps + " steps");
+        return "Player " + color + " moves " + steps + " steps";
+    }
 
     private void checkClashWithSameColor(int steps, List<Figure> shortlist, List<Position> positionList) {
         for (int i = 0; i < figures.length; i++) {

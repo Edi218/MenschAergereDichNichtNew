@@ -23,7 +23,7 @@ public class PlayerPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createLineBorder(java.awt.Color.WHITE, 5));
 
-        playerIcons[1] = new JButton("grün       ", green);
+        playerIcons[1] = new JButton("green", green);
 
         playerIcons[1].setBackground(java.awt.Color.WHITE);
 
@@ -36,7 +36,7 @@ public class PlayerPanel extends JPanel {
         playerIcons[1].setVisible(true);
 
 
-        playerIcons[2] = new JButton("rot           ", red);
+        playerIcons[2] = new JButton("red", red);
 
         playerIcons[2].setBackground(java.awt.Color.WHITE);
 
@@ -49,7 +49,7 @@ public class PlayerPanel extends JPanel {
         playerIcons[2].setVisible(true);
 
 
-        playerIcons[0] = new JButton("schwarz", black);
+        playerIcons[0] = new JButton("black", black);
 
         playerIcons[0].setBackground(java.awt.Color.WHITE);
 
@@ -62,7 +62,7 @@ public class PlayerPanel extends JPanel {
         playerIcons[0].setVisible(true);
 
 
-        playerIcons[3] = new JButton("gelb        ", yellow);
+        playerIcons[3] = new JButton("yellow", yellow);
 
         playerIcons[3].setBackground(java.awt.Color.WHITE);
 

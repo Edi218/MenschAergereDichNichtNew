@@ -13,8 +13,8 @@ import java.util.Map;
 public class GameBoard {
     private final Game game;
     private final Field[] standardFields = new Field[41];
-    private final Map<Color, StartField[]> startFields = new HashMap();
-    private final Map<Color, TargetField[]> targetFields = new HashMap<>();
+    private final Map<model.Color, StartField[]> startFields = new HashMap();
+    private final Map<model.Color, TargetField[]> targetFields = new HashMap<>();
     private int fontSize;
 
    /* public TargetField[] blackTarget = new TargetField[4];
@@ -142,7 +142,7 @@ public class GameBoard {
 
         //Startfelder
 
-        for (Color color : Color.values()) {
+        for (model.Color color : model.Color.values()) {
             StartField[] colorStartFields = new StartField[4];
             startFields.put(color, colorStartFields);
             int startX = 0;
@@ -172,7 +172,7 @@ public class GameBoard {
 
         //Zielfelder
 
-        for (Color color : Color.values()) {
+        for (model.Color color : model.Color.values()) {
             TargetField[] colorTargetFields = new TargetField[4];
             targetFields.put(color, colorTargetFields);
             switch (color) {
@@ -218,7 +218,7 @@ public class GameBoard {
 
     }
 
-    private StartField initStartField(int index, int startX, int startY, Color color) {
+    private StartField initStartField(int index, int startX, int startY, model.Color color) {
         int x = index < 2 ? startX : startX + 50;
         int y = index % 2 == 0 ? startY : startY + 50;
         return new StartField(x, y, color);
@@ -229,7 +229,7 @@ public class GameBoard {
         Map<Field, Figure> standardFieldMap = new HashMap<>();
         Map<TargetField, Figure> targetFieldMap = new HashMap<>();
 
-        for (Player player : game.players) {
+        for (Player player : game.getPlayers()) {
             for (Figure figure : player.figures) {
                 Position position = figure.getPosition();
                 if (position.isOnStart()) {
@@ -274,7 +274,7 @@ public class GameBoard {
         // check for each field, whether figure available in figure map
         // depending on figure == null, draw Circle in diff colors
         startFields.entrySet().forEach(colorEntry -> {
-            Color color = colorEntry.getKey();
+            model.Color color = colorEntry.getKey();
             StartField[] colorStartFields = colorEntry.getValue();
             Arrays.stream(colorStartFields).forEach(startField -> {
                 Figure figure = startFigureMap.get(startField);
@@ -295,7 +295,7 @@ public class GameBoard {
     private void drawTargetFields(Graphics2D g, Map<TargetField, Figure> targetFigureMap) {
         fontSize = 20;
         targetFields.entrySet().forEach(colorEntry -> {
-            Color color = colorEntry.getKey();
+            model.Color color = colorEntry.getKey();
             TargetField[] colorTargetFields = colorEntry.getValue();
             Arrays.stream(colorTargetFields).forEach(targetField -> {
                 Figure figure = targetFigureMap.get(targetField);

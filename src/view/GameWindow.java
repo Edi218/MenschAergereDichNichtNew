@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
 
 public class GameWindow extends javax.swing.JFrame {
 
-    private final GamePanel gamePanel;
-    private final Game game;
+    private GamePanel gamePanel;
+    private Game game;
 
 
     public GameWindow(Game game) {
@@ -43,7 +43,7 @@ public class GameWindow extends javax.swing.JFrame {
         restart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Game game1 = new Game(1);
+                Game game1 = new Game();
                 dispose();
                 GameWindow gameWindow = new GameWindow(game1);
                 gameWindow.setVisible(true);

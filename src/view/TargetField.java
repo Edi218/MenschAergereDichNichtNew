@@ -1,5 +1,7 @@
 package view;
 
+import model.Color;
+
 public class TargetField {
     private int x;
     private int y;

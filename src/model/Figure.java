@@ -1,7 +1,5 @@
 package model;
 
-import view.Color;
-
 public class Figure {
     public int id;
     public Color color;

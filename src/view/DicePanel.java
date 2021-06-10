@@ -1,25 +1,31 @@
 package view;
 
+import model.Game;
 import model.Wuerfel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.Color;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class DicePanel extends JPanel {
 
-    public JButton wuerfelnButton;
-    public JButton[] figureMoveButton;
-    public int augenzahl;
+    private final GamePanel gamePanel;
+    private final Game game;
+    public int steps;
     public int chosenFigure;
+    private final JButton diceButton;
+    private final JButton[] figureMoveButton;
+    private final JButton diceImageButton;
 
-    public int getAugenzahl() {
-        return augenzahl;
-    }
+    public DicePanel(GamePanel gamePanel, Game game) {
+        this.game = game;
+        this.gamePanel = gamePanel;
 
-    public DicePanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBackground(Color.BLACK);
         //setBorder(BorderFactory.createLineBorder(java.awt.Color.WHITE, 5));
         figureMoveButton = new JButton[4];
 
@@ -30,59 +36,50 @@ public class DicePanel extends JPanel {
         ImageIcon diceFive = new ImageIcon(getClass().getResource("images/wuerfel5.png"));
         ImageIcon diceSix = new ImageIcon(getClass().getResource("images/wuerfel6.png"));
 
-        JButton diceButton = new JButton();
+        diceImageButton = new JButton();
 //        diceButton.setPreferredSize(new Dimension(263, 263));
-        diceButton.setAlignmentX(CENTER_ALIGNMENT);
-        diceButton.setIcon(diceOne);
-        add(diceButton);
-        diceButton.setBackground(java.awt.Color.BLACK);
-        diceButton.setMargin(new Insets(15, 15, 15, 15));
-        diceButton.setBorderPainted(false);
+        diceImageButton.setAlignmentX(CENTER_ALIGNMENT);
+        diceImageButton.setIcon(diceOne);
+        add(diceImageButton);
+        diceImageButton.setBackground(java.awt.Color.BLACK);
+        diceImageButton.setMargin(new Insets(15, 15, 15, 15));
+        diceImageButton.setBorderPainted(false);
 
         add(Box.createVerticalGlue());
 
-        wuerfelnButton = new JButton("Roll dice");
-        wuerfelnButton.setVisible(false);
-        wuerfelnButton.setMaximumSize(new Dimension(263, 50));
-        wuerfelnButton.setAlignmentX(CENTER_ALIGNMENT);
-        wuerfelnButton.setBackground(java.awt.Color.WHITE);
-        wuerfelnButton.addActionListener(e -> {
+        diceButton = new JButton("Roll dice");
+        diceButton.setVisible(false);
+        diceButton.setMaximumSize(new Dimension(263, 80));
+        diceButton.setMinimumSize(new Dimension(263, 80));
+        diceButton.setAlignmentX(CENTER_ALIGNMENT);
+        diceButton.setBackground(java.awt.Color.WHITE);
+        diceButton.addActionListener(e -> {
+            steps = Wuerfel.wuerfeln();
+            System.out.println(steps);
+            if (steps == 1) {
+                diceImageButton.setIcon(diceOne);
+            } else if (steps == 2) {
+                diceImageButton.setIcon(diceTwo);
+            } else if (steps == 3) {
+                diceImageButton.setIcon(diceThree);
+            } else if (steps == 4) {
+                diceImageButton.setIcon(diceFour);
+            } else if (steps == 5) {
+                diceImageButton.setIcon(diceFive);
+            } else if (steps == 6) {
+                diceImageButton.setIcon(diceSix);
+            }
+            diceButton.setEnabled(false);
 
-            augenzahl = Wuerfel.wuerfeln();
-
-            System.out.println(augenzahl);
-
-
-            if (augenzahl == 1){
-                diceButton.setIcon(diceOne);
-            }
-            else if (augenzahl == 2){
-                diceButton.setIcon(diceTwo);
-            }
-            else if (augenzahl == 3){
-                diceButton.setIcon(diceThree);
-            }
-            else if (augenzahl == 4){
-                diceButton.setIcon(diceFour);
-            }
-            else if (augenzahl == 5){
-                diceButton.setIcon(diceFive);
-            }
-            else if (augenzahl == 6){
-                diceButton.setIcon(diceSix);
-            }
-
-            wuerfelnButton.setVisible(false);
+            List<Integer> shortList = game.calculateShortList(steps);
 
             for (int i = 0; i < figureMoveButton.length; i++) {
-                figureMoveButton[i].setVisible(true);
+                figureMoveButton[i].setVisible(shortList.contains(i));
             }
         });
 
-
         for (int i = 0; i < figureMoveButton.length; i++) {
-            int j = i + 1;
-            figureMoveButton[i] = new JButton("move Figure " + j);
+            figureMoveButton[i] = new JButton("move figure " + (i + 1));
             figureMoveButton[i].setMaximumSize(new Dimension(133, 50));
             figureMoveButton[i].setVisible(false);
             figureMoveButton[i].setBackground(Color.WHITE);
@@ -90,39 +87,39 @@ public class DicePanel extends JPanel {
             figureMoveButton[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK, 10));
             figureMoveButton[i].setMargin(new Insets(15, 15, 15, 15));
 
+            figureMoveButton[i].addActionListener(e -> {
+                String text = ((JButton) e.getSource()).getText();
+                String indexText = text.substring(text.lastIndexOf(" ") + 1);
+                chosenFigure = Integer.parseInt(indexText) - 1;
+                hideAllFigureButtons();
 
+                // tell the game to move the chosen figure. change to event listener in future
+                gamePanel.humanMove(chosenFigure);
+                
+
+            });
             add(figureMoveButton[i]);
         }
+        add(diceButton);
+    }
 
+    private void hideAllFigureButtons() {
+        Arrays.stream(figureMoveButton).forEach(button -> button.setVisible(false));
+    }
 
-        figureMoveButton[0].addActionListener(e -> {
-            chosenFigure = 0;
-            for (int i = 0; i < figureMoveButton.length; i++) {
-                figureMoveButton[i].setVisible(false);
-            }
-        });
+    public int getSteps() {
+        return steps;
+    }
 
-        figureMoveButton[1].addActionListener(e -> {
-            chosenFigure = 1;
-            for (int i = 0; i < figureMoveButton.length; i++) {
-                figureMoveButton[i].setVisible(false);
-            }
-        });
+    public void hideWuerfelnButton() {
+        diceButton.setEnabled(false);
+        //diceImageButton.setVisible(false);
+        hideAllFigureButtons();
+    }
 
-        figureMoveButton[2].addActionListener(e -> {
-            chosenFigure = 2;
-            for (int i = 0; i < figureMoveButton.length; i++) {
-                figureMoveButton[i].setVisible(false);
-            }
-        });
-
-        figureMoveButton[3].addActionListener(e -> {
-            chosenFigure = 3;
-            for (int i = 0; i < figureMoveButton.length; i++) {
-                figureMoveButton[i].setVisible(false);
-            }
-        });
-
-        add(wuerfelnButton);
+    public void showWuerfelnButton() {
+        diceButton.setVisible(true);
+        diceImageButton.setVisible(true);
+        diceButton.setEnabled(true);
     }
 }
